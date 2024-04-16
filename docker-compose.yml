@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  mysql:
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'asset_issuance_db'
+      MYSQL_USER: 'navtech'
+      MYSQL_PASSWORD: 'navtech'
+      MYSQL_ROOT_PASSWORD: 'navtech'
+    ports:
+      - '3306:3306'
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  php:
+    build:
+      context: ./php
+    restart: always
+    volumes:
+      - ./php:/var/www/html
+    depends_on:
+      - mysql
+
+  nginx:
+    image: nginx:latest
+    restart: always
+    ports:
+      - '8080:80'
+    volumes:
+      - ./nginx-conf:/etc/nginx/conf.d
+      - ./php:/var/www/html
+    depends_on:
+      - php
+
+volumes:
+  mysql_data:
