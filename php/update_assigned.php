@@ -23,9 +23,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // SQL query to update asset details
-    $sql = "UPDATE asset_issuance SET employee_name=?, position=?, department=?, issuance_date=?, asset_type=?, device_model=?, service_tag=?, serial_number=?, laptop_bag=?, mouse=?, connector=? WHERE id=?";
+    $sql = "UPDATE asset_issuance SET employee_name=?, position=?, department=?, issuance_date=?, asset_type=?, device_model=?, service_tag=?, serial_number=?, mouse=?, connector=? WHERE id=?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sssssssssssi", $employee_name, $department, $position, $issuance_date, $asset_type, $device_model, $service_tag, $serial_number, $laptop_bag, $mouse, $connector, $id);
+    $stmt->bind_param("ssssssssssi", $employee_name, $department, $position, $issuance_date, $asset_type, $device_model, $service_tag, $serial_number, $mouse, $connector, $id);
 
     // Set parameters and execute statement
     $employee_name = $_POST['employee_name'];
@@ -36,7 +36,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $device_model = $_POST['device_model'];
     $service_tag = $_POST['service_tag'];
     $serial_number = $_POST['serial_number'];
-    $laptop_bag = isset($_POST['laptop_bag']) ? 'Yes' : 'No';
     $mouse = isset($_POST['mouse']) ? 'Yes' : 'No';
     $connector = isset($_POST['connector']) ? 'Yes' : 'No';
 

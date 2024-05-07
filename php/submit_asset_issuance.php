@@ -41,7 +41,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         device_model VARCHAR(100),
         service_tag VARCHAR(100),
         serial_number VARCHAR(100) NOT NULL,
-        laptop_bag ENUM('Yes', 'No') NOT NULL,
         mouse ENUM('Yes', 'No') NOT NULL,
         connector ENUM('Yes', 'No') NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -53,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Prepare SQL statement
-    $stmt = $conn->prepare("INSERT INTO asset_issuance (employee_name, position, department, issuance_date, asset_type, device_model, service_tag, serial_number, laptop_bag, mouse, connector) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO asset_issuance (employee_name, position, department, issuance_date, asset_type, device_model, service_tag, serial_number, mouse, connector) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
     
     // Check if prepare() succeeded
     if (!$stmt) {
@@ -61,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Bind parameters to the prepared statement
-    $stmt->bind_param("sssssssssss", $employee_name, $position, $department, $issuance_date, $asset_type, $device_model, $service_tag, $serial_number, $laptop_bag, $mouse, $connector);
+    $stmt->bind_param("ssssssssss", $employee_name, $position, $department, $issuance_date, $asset_type, $device_model, $service_tag, $serial_number, $mouse, $connector);
 
     // Execute SQL statement
     if ($stmt->execute() === TRUE) {

@@ -21,7 +21,6 @@
             <th>Device Model</th>
             <th>Service Tag</th>
             <th>Serial Number</th>
-            <th>Laptop Bag</th>
             <th>Mouse</th>
             <th>Connector</th>
             <th>Edit</th>
@@ -60,7 +59,6 @@
                 echo "<td>" . $row["device_model"] . "</td>";
                 echo "<td>" . $row["service_tag"] . "</td>";
                 echo "<td>" . $row["serial_number"] . "</td>";
-                echo "<td>" . $row["laptop_bag"] . "</td>";
                 echo "<td>" . $row["mouse"] . "</td>";
                 echo "<td>" . $row["connector"] . "</td>";
                 echo "<td><a href='edit_assigned.php?id=" . $row["id"] . "'>Edit</a></td>";
