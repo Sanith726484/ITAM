@@ -50,7 +50,7 @@ function validateAdmin($username, $password) {
 </head>
 <body>
     <h1>Admin Login</h1>
-    <?php if(isset($error_message)) echo "<p>$error_message</p>"; ?>
+    
     <form action="" method="post">
         <label for="username">Username:</label>
         <input type="text" name="username" id="username" required><br><br>
@@ -58,5 +58,6 @@ function validateAdmin($username, $password) {
         <input type="password" name="password" id="password" required><br><br>
         <button type="submit">Login</button>
     </form>
+    <?php if(isset($error_message)) echo "<p style='color: red'>$error_message</p>"; ?>
 </body>
 </html>

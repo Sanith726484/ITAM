@@ -36,7 +36,9 @@ if(!isset($_SESSION['admin_id'])) {
         <form action="view_assets_stock.php" method="get">
             <button type="submit">View Stock</button>
         </form>
-        <p>Logout <a href="admin_logout.php">here</a>.</p>
+        <form action="admin_logout.php" method="get">
+            <button type="submit">Logout</button>
+        </form>
     </div>
 </body>
 </html>

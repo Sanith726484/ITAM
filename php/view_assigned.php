@@ -10,6 +10,11 @@
 <body>
     <h1>View Assets</h1>
 
+    <!-- Export button -->
+    <form action="export_assets.php" method="post">
+        <button type="submit" name="export_assets">Export to CSV</button>
+    </form>
+
     <table border="1">
         <tr>
             <th>ID</th>
@@ -66,7 +71,7 @@
                 echo "</tr>";
             }
         } else {
-            echo "<tr><td colspan='17'>No assets found.</td></tr>";
+            echo "<tr><td colspan='13'>No assets found.</td></tr>";
         }
 
         // Close connection
