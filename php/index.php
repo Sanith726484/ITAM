@@ -10,13 +10,16 @@
 <body>
 
     <h1>Asset Issuance Form</h1>
+<div class="main_row">
 
-     <!-- CSV Import Form -->
-    <form action="" method="post" enctype="multipart/form-data">
-        <label for="csv_file">Import CSV:</label>
-        <input type="file" name="csv_file" id="csv_file" accept=".csv"><br><br>
-        <button type="submit" name="import_csv">Import CSV</button>
-    </form>
+    <div>
+        <!-- CSV Import Form -->
+        <form class="import_form" action="" method="post" enctype="multipart/form-data">
+            <label for="csv_file">Import CSV:</label>
+            <input type="file" name="csv_file" id="csv_file" accept=".csv">
+            <button type="submit" name="import_csv">Import CSV</button>
+        </form>
+    </div>
 
     <?php
     // Check if form is submitted with CSV file
@@ -47,17 +50,19 @@
             // Insert CSV data into the database
             foreach ($csv_data as $row) {
                 // Assuming the CSV file columns order matches with the database table columns order
-                $sql = "INSERT INTO asset_issuance (employee_name, department, position, issuance_date, asset_type, serial_number, asset_condition, employee_signature, employee_signature_date, laptop_bag, device_model, service_tag, mouse, connector)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                $sql = "INSERT INTO asset_issuance (employee_name, position, department, issuance_date, asset_type, device_model, service_tag, serial_number, laptop_bag, mouse, connector)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
                 $stmt = $conn->prepare($sql);
-                $stmt->bind_param("ssssssssssssss", ...$row); // Assuming each row of CSV data corresponds to a single record
+                $stmt->bind_param("sssssssssss", ...$row); // Assuming each row of CSV data corresponds to a single record
                 $stmt->execute();
                 $stmt->close();
             }
-
-            echo "CSV file imported successfully.";
-            // Redirect to view_assigned.php
-            header("Location: view_assigned.php");
+            echo "<br><br><br>";
+            echo '<div class="success-message">CSV file imported successfully. <span class="icon">&#10004;</span></div>';
+            echo "<br>";
+            echo ' <form action="view_assigned.php" method="get">
+                <button type="submit">View Assets</button>
+            </form> ';
             // ob_end_flush(); // Flush the output buffer and send the headers
             exit();
         } else {
@@ -67,56 +72,125 @@
     ?>
 
     <hr>
+    <div class="form">
+        <form class="manual_form" action="submit_asset_issuance.php" method="post">
 
-    <form action="submit_asset_issuance.php" method="post">
-        <label for="employee_name">Employee Name:</label><br>
-        <input type="text" id="employee_name" name="employee_name" required><br><br>
+            <div class="employee_details_field">
+                <div>
+                    <label for="employee_name">Employee Name:</label>
+                    <input type="text" id="employee_name" name="employee_name" required>
+                </div>
 
-        <label for="department">Department:</label><br>
-        <input type="text" id="department" name="department" required><br><br>
+                <div>
+                    <label for="position">Position:</label>
+                    <input type="text" id="position" name="position" required>
+                </div>
+            </div>
 
-        <label for="position">Position:</label><br>
-        <input type="text" id="position" name="position" required><br><br>
+            <div class="employee_details_field">
+                <div>
+                    <label for="department">Department:</label>
+                    <input type="text" id="department" name="department" required>
+                </div>
+                <div>
+                    <label for="issuance_date">Issuance Date:</label>
+                    <input type="date" id="issuance_date" name="issuance_date" required>
+                </div>
+            </div>
 
-        <label for="issuance_date">Issuance Date:</label><br>
-        <input type="date" id="issuance_date" name="issuance_date" required><br><br>
 
-        <label for="asset_type">Asset Type:</label><br>
-        <select id="asset_type" name="asset_type" required>
-            <option value="laptop">Laptop</option>
-            <option value="desktop">Desktop</option>
-            <option value="tablet">Tablet</option>
-            <!-- Add more asset types as needed -->
-        </select><br><br>
+            <div class="employee_details_field">
+                <div>
+                    <label for="asset_type">Asset Type:</label>
+                    <select id="asset_type" name="asset_type" required>
+                        <option value="Laptop">Laptop</option>
+                        <option value="Mobile">Mobile</option>
+                        <!-- Add more asset types as needed -->
+                    </select>
+                </div>
+                <div>
+                    <label for="device_model">Device Model:</label>
+                    <input type="text" id="device_model" name="device_model">
+                </div>
+            </div>
 
-        <label for="serial_number">Serial Number:</label><br>
-        <input type="text" id="serial_number" name="serial_number" required><br><br>
+            
+            <div class="employee_details_field">
+                <div>
+                    <label for="service_or_serial">Select Service Tag or Serial No.:</label>
+                    <select id="service_or_serial" name="service_or_serial" onchange="toggleFields()">
+                        <option value="blank">Select choice</option>
+                        <option value="service_tag">Service Tag</option>
+                        <option value="serial_number">Serial Number</option>
+                    </select>
+                </div>
 
-        <label for="asset_condition">Asset Condition:</label><br>
-        <input type="text" id="asset_condition" name="asset_condition" required><br><br>
+                <div class="employee_details_field" id="service_tag_field" style="display: none" >
+                    <div>
+                        <label for="service_tag">Service Tag:</label>
+                        <input type="text" id="service_tag" name="service_tag">
+                    </div>
+                </div>
 
-        <label for="employee_signature">Employee Signature:</label><br>
-        <input type="text" id="employee_signature" name="employee_signature" required><br><br>
+                <div class="employee_details_field" id="serial_number_field" style="display: none">
+                    <div>
+                        <label for="serial_number">Serial Number:</label>
+                        <input type="text" id="serial_number" name="serial_number" required>
+                    </div>
+                </div>
+            </div>
 
-        <label for="employee_signature_date">Employee Signature Date:</label><br>
-        <input type="date" id="employee_signature_date" name="employee_signature_date" required><br><br>
+            <div class="checkbox_fields">
+                <div>
+                    <label for="laptop_bag">Laptop Bag:</label>
+                    <input type="checkbox" id="laptop_bag" name="laptop_bag" value="Yes">
+                </div>
+                <div>
+                    <label for="mouse">Mouse:</label>
+                    <input type="checkbox" id="mouse" name="mouse" value="Yes">
+                </div>
+                <div>
+                    <label for="connector">Connector:</label>
+                    <input type="checkbox" id="connector" name="connector" value="Yes">
+                </div>    
+            </div>
+            <input class="submit_button" type="submit" value="Submit">
+        </form>
+    </div>
+</div>
 
-        <label for="laptop_bag">Laptop Bag:</label><br>
-        <input type="checkbox" id="laptop_bag" name="laptop_bag" value="Yes"><br><br>
-
-        <label for="device_model">Device Model:</label><br>
-        <input type="text" id="device_model" name="device_model"><br><br>
-
-        <label for="service_tag">Service Tag:</label><br>
-        <input type="text" id="service_tag" name="service_tag"><br><br>
-
-        <label for="mouse">Mouse:</label><br>
-        <input type="checkbox" id="mouse" name="mouse" value="Yes"><br><br>
-
-        <label for="connector">Connector:</label><br>
-        <input type="checkbox" id="connector" name="connector" value="Yes"><br><br>
-
-        <input type="submit" value="Submit">
-    </form>
 </body>
 </html>
+
+<script>
+    function toggleFields() {
+        var selectedOption = document.getElementById("service_or_serial").value;
+        var serviceTagField = document.getElementById("service_tag_field");
+        var serialNumberField = document.getElementById("serial_number_field");
+
+        if (selectedOption === "service_tag") {
+            serviceTagField.style.display = "block";
+            serialNumberField.style.display = "none";
+        } else if (selectedOption === "serial_number") {
+            serviceTagField.style.display = "none";
+            serialNumberField.style.display = "block";
+        } else {
+            serviceTagField.style.display = "none";
+            serialNumberField.style.display = "none";
+        }
+    }
+</script>
+
+
+<style>
+    .success-message {
+        color: green;
+        font-weight: bold;
+    }
+
+    .icon {
+        color: green;
+        font-size: 24px;
+        vertical-align: middle;
+    }
+</style>

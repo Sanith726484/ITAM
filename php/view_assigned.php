@@ -14,17 +14,14 @@
         <tr>
             <th>ID</th>
             <th>Employee Name</th>
-            <th>Department</th>
             <th>Position</th>
+            <th>Department</th>
             <th>Issuance Date</th>
             <th>Asset Type</th>
-            <th>Serial Number</th>
-            <th>Asset Condition</th>
-            <th>Employee Signature</th>
-            <th>Employee Signature Date</th>
-            <th>Laptop Bag</th>
             <th>Device Model</th>
             <th>Service Tag</th>
+            <th>Serial Number</th>
+            <th>Laptop Bag</th>
             <th>Mouse</th>
             <th>Connector</th>
             <th>Edit</th>
@@ -56,17 +53,14 @@
                 echo "<tr>";
                 echo "<td>" . $row["id"] . "</td>";
                 echo "<td>" . $row["employee_name"] . "</td>";
-                echo "<td>" . $row["department"] . "</td>";
                 echo "<td>" . $row["position"] . "</td>";
+                echo "<td>" . $row["department"] . "</td>";
                 echo "<td>" . $row["issuance_date"] . "</td>";
                 echo "<td>" . $row["asset_type"] . "</td>";
-                echo "<td>" . $row["serial_number"] . "</td>";
-                echo "<td>" . $row["asset_condition"] . "</td>";
-                echo "<td>" . $row["employee_signature"] . "</td>";
-                echo "<td>" . $row["employee_signature_date"] . "</td>";
-                echo "<td>" . $row["laptop_bag"] . "</td>";
                 echo "<td>" . $row["device_model"] . "</td>";
                 echo "<td>" . $row["service_tag"] . "</td>";
+                echo "<td>" . $row["serial_number"] . "</td>";
+                echo "<td>" . $row["laptop_bag"] . "</td>";
                 echo "<td>" . $row["mouse"] . "</td>";
                 echo "<td>" . $row["connector"] . "</td>";
                 echo "<td><a href='edit_assigned.php?id=" . $row["id"] . "'>Edit</a></td>";

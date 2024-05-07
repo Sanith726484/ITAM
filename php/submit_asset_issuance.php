@@ -5,17 +5,14 @@
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve form data
     $employee_name = $_POST["employee_name"];
-    $department = $_POST["department"];
     $position = $_POST["position"];
+    $department = $_POST["department"];
     $issuance_date = $_POST["issuance_date"];
     $asset_type = $_POST["asset_type"];
-    $serial_number = $_POST["serial_number"];
-    $asset_condition = $_POST["asset_condition"];
-    $employee_signature = $_POST["employee_signature"];
-    $employee_signature_date = $_POST["employee_signature_date"];
-    $laptop_bag = isset($_POST["laptop_bag"]) ? $_POST["laptop_bag"] : "No";
     $device_model = isset($_POST["device_model"]) ? $_POST["device_model"] : "";
     $service_tag = isset($_POST["service_tag"]) ? $_POST["service_tag"] : "";
+    $serial_number = $_POST["serial_number"];
+    $laptop_bag = isset($_POST["laptop_bag"]) ? $_POST["laptop_bag"] : "No";
     $mouse = isset($_POST["mouse"]) ? $_POST["mouse"] : "No";
     $connector = isset($_POST["connector"]) ? $_POST["connector"] : "No";
 
@@ -37,31 +34,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sql = "CREATE TABLE IF NOT EXISTS asset_issuance (
         id INT AUTO_INCREMENT PRIMARY KEY,
         employee_name VARCHAR(255) NOT NULL,
-        department VARCHAR(255) NOT NULL,
         position VARCHAR(255) NOT NULL,
+        department VARCHAR(255) NOT NULL,
         issuance_date DATE NOT NULL,
         asset_type VARCHAR(50) NOT NULL,
-        serial_number VARCHAR(100) NOT NULL,
-        asset_condition VARCHAR(255) NOT NULL,
-        employee_signature VARCHAR(255) NOT NULL,
-        employee_signature_date DATE NOT NULL,
-        laptop_bag ENUM('Yes', 'No') NOT NULL,
         device_model VARCHAR(100),
         service_tag VARCHAR(100),
+        serial_number VARCHAR(100) NOT NULL,
+        laptop_bag ENUM('Yes', 'No') NOT NULL,
         mouse ENUM('Yes', 'No') NOT NULL,
         connector ENUM('Yes', 'No') NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )";
 
-// Execute SQL query
-if ($conn->query($sql) === TRUE) {
-    echo "Table asset_issuance created successfully";
-} else {
-    echo "Error creating table: " . $conn->error;
-}
+    // Execute SQL query
+    if ($conn->query($sql) === FALSE) {
+        echo "Error creating table: " . $conn->error;
+    }
 
     // Prepare SQL statement
-    $stmt = $conn->prepare("INSERT INTO asset_issuance (employee_name, department, position, issuance_date, asset_type, serial_number, asset_condition, employee_signature, employee_signature_date, laptop_bag, device_model, service_tag, mouse, connector) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO asset_issuance (employee_name, position, department, issuance_date, asset_type, device_model, service_tag, serial_number, laptop_bag, mouse, connector) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
     
     // Check if prepare() succeeded
     if (!$stmt) {
@@ -69,7 +61,7 @@ if ($conn->query($sql) === TRUE) {
     }
 
     // Bind parameters to the prepared statement
-    $stmt->bind_param("ssssssssssssss", $employee_name, $department, $position, $issuance_date, $asset_type, $serial_number, $asset_condition, $employee_signature, $employee_signature_date, $laptop_bag, $device_model, $service_tag, $mouse, $connector);
+    $stmt->bind_param("sssssssssss", $employee_name, $position, $department, $issuance_date, $asset_type, $device_model, $service_tag, $serial_number, $laptop_bag, $mouse, $connector);
 
     // Execute SQL statement
     if ($stmt->execute() === TRUE) {

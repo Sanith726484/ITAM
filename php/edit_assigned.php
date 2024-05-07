@@ -45,11 +45,11 @@
                 <label for="employee_name">Employee Name:</label>
                 <input type="text" name="employee_name" value="<?php echo $row['employee_name']; ?>"><br>
 
-                <label for="department">Department:</label>
-                <input type="text" name="department" value="<?php echo $row['department']; ?>"><br>
-
                 <label for="position">Position:</label>
                 <input type="text" name="position" value="<?php echo $row['position']; ?>"><br>
+
+                <label for="department">Department:</label>
+                <input type="text" name="department" value="<?php echo $row['department']; ?>"><br>
 
                 <label for="issuance_date">Issuance Date:</label>
                 <input type="date" name="issuance_date" value="<?php echo $row['issuance_date']; ?>"><br>
@@ -57,23 +57,14 @@
                 <label for="asset_type">Asset Type:</label>
                 <input type="text" name="asset_type" value="<?php echo $row['asset_type']; ?>"><br>
 
-                <label for="serial_number">Serial Number:</label>
-                <input type="text" name="serial_number" value="<?php echo $row['serial_number']; ?>"><br>
-
-                <label for="asset_condition">Asset Condition:</label>
-                <input type="text" name="asset_condition" value="<?php echo $row['asset_condition']; ?>"><br>
-
-                <label for="employee_signature">Employee Signature:</label>
-                <input type="text" name="employee_signature" value="<?php echo $row['employee_signature']; ?>"><br>
-
-                <label for="employee_signature_date">Employee Signature Date:</label>
-                <input type="date" name="employee_signature_date" value="<?php echo $row['employee_signature_date']; ?>"><br>
-
                 <label for="device_model">Device Model:</label>
                 <input type="text" name="device_model" value="<?php echo $row['device_model']; ?>"><br>
 
                 <label for="service_tag">Service Tag:</label>
                 <input type="text" name="service_tag" value="<?php echo $row['service_tag']; ?>"><br>
+
+                <label for="serial_number">Serial Number:</label>
+                <input type="text" name="serial_number" value="<?php echo $row['serial_number']; ?>"><br>
 
                 <label for="laptop_bag">Laptop Bag:</label>
                 <input type="checkbox" name="laptop_bag" value="Yes" <?php echo ($row['laptop_bag'] == 'Yes') ? 'checked' : ''; ?>>

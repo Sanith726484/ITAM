@@ -10,7 +10,7 @@
 <body>
     <h1>Asset Stock Import</h1>
     
-    <form action="" method="post" enctype="multipart/form-data">
+    <form class="import_form" action="" method="post" enctype="multipart/form-data">
         <label for="csv_file">Import CSV:</label>
         <input type="file" name="csv_file" id="csv_file" accept=".csv"><br><br>
         <button type="submit" name="import_csv">Import CSV</button>
@@ -127,9 +127,7 @@
         )";
 
         // Execute SQL query
-        if ($conn->query($sql) === TRUE) {
-            echo "Table stock_update created successfully";
-        } else {
+        if ($conn->query($sql) === FALSE) {
             echo "Error creating table: " . $conn->error;
         }
             

@@ -26,8 +26,9 @@
 </head>
 <body>
     <div class="menu">
+
         <form action="index.php" method="get">
-            <button type="submit">Assign New Asset</button>
+            <button type="submit">Home</button>
         </form>
         
         <form action="assets_stock.php" method="get">
@@ -63,12 +64,9 @@
     )";
     
     // Execute SQL query
-    if ($conn->query($sql) === TRUE) {
-        echo "Table stock_update created or already exists";
-    } else {
+    if ($conn->query($sql) === FALSE) {
         echo "Error creating table: " . $conn->error;
-    }
-    
+    }    
 
     // Check if delete request is submitted
     if(isset($_POST['delete']) && isset($_POST['delete_id'])){

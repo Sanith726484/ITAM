@@ -1,6 +1,5 @@
 <?php include 'header.php'; ?>
 
-
 <?php
 // Check if form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -24,23 +23,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // SQL query to update asset details
-    $sql = "UPDATE asset_issuance SET employee_name=?, department=?, position=?, issuance_date=?, asset_type=?, serial_number=?, asset_condition=?, employee_signature=?, employee_signature_date=?, laptop_bag=?, device_model=?, service_tag=?, mouse=?, connector=? WHERE id=?";
+    $sql = "UPDATE asset_issuance SET employee_name=?, position=?, department=?, issuance_date=?, asset_type=?, device_model=?, service_tag=?, serial_number=?, laptop_bag=?, mouse=?, connector=? WHERE id=?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssssssssssssssi", $employee_name, $department, $position, $issuance_date, $asset_type, $serial_number, $asset_condition, $employee_signature, $employee_signature_date, $laptop_bag, $device_model, $service_tag, $mouse, $connector, $id);
+    $stmt->bind_param("sssssssssssi", $employee_name, $department, $position, $issuance_date, $asset_type, $device_model, $service_tag, $serial_number, $laptop_bag, $mouse, $connector, $id);
 
     // Set parameters and execute statement
     $employee_name = $_POST['employee_name'];
-    $department = $_POST['department'];
     $position = $_POST['position'];
+    $department = $_POST['department'];
     $issuance_date = $_POST['issuance_date'];
     $asset_type = $_POST['asset_type'];
-    $serial_number = $_POST['serial_number'];
-    $asset_condition = $_POST['asset_condition'];
-    $employee_signature = $_POST['employee_signature'];
-    $employee_signature_date = $_POST['employee_signature_date'];
-    $laptop_bag = isset($_POST['laptop_bag']) ? 'Yes' : 'No';
     $device_model = $_POST['device_model'];
     $service_tag = $_POST['service_tag'];
+    $serial_number = $_POST['serial_number'];
+    $laptop_bag = isset($_POST['laptop_bag']) ? 'Yes' : 'No';
     $mouse = isset($_POST['mouse']) ? 'Yes' : 'No';
     $connector = isset($_POST['connector']) ? 'Yes' : 'No';
 
