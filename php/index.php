@@ -49,10 +49,12 @@
                 // Insert CSV data into the database
                 foreach ($csv_data as $row) {
                     // Assuming the CSV file columns order matches with the database table columns order
-                    $sql = "INSERT INTO asset_issuance (employee_name, position, department, issuance_date, asset_type, device_model, service_tag, serial_number, mouse, connector)
-                            VALUES (?, ?, ? , ?, ?, ?, ?, ?, ?, ?)";
+                    $asset_type = $row[4]; // Assuming 'asset_type' is at index 4 in the CSV row
+                    // Bind parameters excluding 'asset_type'
+                    $sql = "INSERT INTO asset_issuance (employee_name, position, department, issuance_date, device_model, service_tag, serial_number, mouse, connector, asset_type)
+                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
                     $stmt = $conn->prepare($sql);
-                    $stmt->bind_param("ssssssssss", ...$row); // Assuming each row of CSV data corresponds to a single record
+                    $stmt->bind_param("ssssssssss", $row[0], $row[1], $row[2], $row[3], $row[5], $row[6], $row[7], $row[8], $row[9], $asset_type);
                     $stmt->execute();
                     $stmt->close();
                 }
