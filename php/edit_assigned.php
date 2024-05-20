@@ -40,8 +40,7 @@
 
         if ($result->num_rows > 0) {
             // Asset found, display edit form
-            $row = $result->fetch_assoc();
-    ?>
+            $row = $result->fetch_assoc(); ?>
             <div class="form">
                 <form class="manual_form" action="update_assigned.php" method="post">
                     <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
@@ -103,11 +102,11 @@
                     <input class="submit_button" type="submit" value="Submit">
                 </form>
             </div>
-    <?php
+        <?php
         } else {
             echo "Asset not found.";
-        }
-
+        } ?>
+        <?php
         // Close connection
         $stmt->close();
         $conn->close();
