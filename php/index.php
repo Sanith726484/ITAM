@@ -64,7 +64,6 @@
                 echo ' <form action="view_assigned.php" method="get">
                     <button type="submit">View Assets</button>
                 </form> ';
-                // ob_end_flush(); // Flush the output buffer and send the headers
                 exit();
             } else {
                 echo "Error uploading CSV file.";
@@ -98,7 +97,6 @@
                     </div>
                 </div>
 
-
                 <div class="employee_details_field">
                     <div>
                         <label for="asset_type">Asset Type:</label>
@@ -114,30 +112,28 @@
                     </div>
                 </div>
 
-                
                 <div class="employee_details_field">
                     <div>
                         <label for="service_or_serial">Select Service Tag or Serial No.:</label>
-                        <select id="service_or_serial" name="service_or_serial" onchange="toggleFields()">
-                            <option value="blank">Select choice</option>
-                            <option value="service_tag">Service Tag</option>
+                        <select id="service_or_serial" name="service_or_serial" onchange="toggleFields()" required>
                             <option value="serial_number">Serial Number</option>
+                            <option value="service_tag">Service Tag</option>
                         </select>
                     </div>
 
-                    <div class="employee_details_field" id="service_tag_field" style="display: none" >
+                    <div class="employee_details_field" id="serial_number_field">
+                        <div>
+                            <label for="serial_number">Serial Number:</label>
+                            <input type="text" id="serial_number" name="serial_number">
+                        </div>
+                    </div>
+                    <div class="employee_details_field" id="service_tag_field"  style="display: none">
                         <div>
                             <label for="service_tag">Service Tag:</label>
                             <input type="text" id="service_tag" name="service_tag">
                         </div>
                     </div>
 
-                    <div class="employee_details_field" id="serial_number_field" style="display: none">
-                        <div>
-                            <label for="serial_number">Serial Number:</label>
-                            <input type="text" id="serial_number" name="serial_number" required>
-                        </div>
-                    </div>
                 </div>
 
                 <div class="checkbox_fields">
@@ -154,28 +150,48 @@
             </form>
         </div>
     </div>
-
 </body>
 </html>
-
 <script>
-    function toggleFields() {
-        var selectedOption = document.getElementById("service_or_serial").value;
-        var serviceTagField = document.getElementById("service_tag_field");
-        var serialNumberField = document.getElementById("serial_number_field");
+        function toggleFields() {
+            var selectedOption = document.getElementById("service_or_serial").value;
+            var serviceTagField = document.getElementById("service_tag_field");
+            var serialNumberField = document.getElementById("serial_number_field");
 
-        if (selectedOption === "service_tag") {
-            serviceTagField.style.display = "block";
-            serialNumberField.style.display = "none";
-        } else if (selectedOption === "serial_number") {
-            serviceTagField.style.display = "none";
-            serialNumberField.style.display = "block";
-        } else {
-            serviceTagField.style.display = "none";
-            serialNumberField.style.display = "none";
+            if (selectedOption === "serial_number") {
+                serviceTagField.style.display = "none";
+                serialNumberField.style.display = "block";
+                document.getElementById("service_tag").required = false;
+                document.getElementById("serial_number").required = true;
+                document.getElementById("service_tag").value = ""; // Clear service tag field
+            } else {
+                serviceTagField.style.display = "block";
+                serialNumberField.style.display = "none";
+                document.getElementById("service_tag").required = false;
+                document.getElementById("serial_number").required = false;
+                document.getElementById("service_tag").value = ""; // Clear service tag field
+                document.getElementById("serial_number").value = ""; // Clear serial number field
+            }
         }
-    }
-</script>
+
+        function validateForm() {
+            var selectedOption = document.getElementById("service_or_serial").value;
+            var serviceTag = document.getElementById("service_tag").value.trim();
+            var serialNumber = document.getElementById("serial_number").value.trim();
+            
+            if (selectedOption === "service_tag" && serviceTag === "") {
+                alert("Service Tag cannot be empty.");
+                return false;
+            }
+
+            if (selectedOption === "serial_number" && serialNumber === "") {
+                alert("Serial Number cannot be empty.");
+                return false;
+            }
+
+            return true; // Allow form submission
+        }
+    </script>
 
 
 <style>
