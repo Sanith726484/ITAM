@@ -102,6 +102,7 @@
                         <label for="asset_type">Asset Type:</label>
                         <select id="asset_type" name="asset_type" required>
                             <option value="Laptop">Laptop</option>
+                            <option value="Desktop">Desktop/macmini</option>
                             <option value="Mobile">Mobile</option>
                             <!-- Add more asset types as needed -->
                         </select>
@@ -178,7 +179,7 @@
             var selectedOption = document.getElementById("service_or_serial").value;
             var serviceTag = document.getElementById("service_tag").value.trim();
             var serialNumber = document.getElementById("serial_number").value.trim();
-            
+
             if (selectedOption === "service_tag" && serviceTag === "") {
                 alert("Service Tag cannot be empty.");
                 return false;
