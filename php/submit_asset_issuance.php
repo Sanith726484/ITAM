@@ -51,26 +51,47 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Error creating table: " . $conn->error;
     }
 
-    // Prepare SQL statement
-    $stmt = $conn->prepare("INSERT INTO asset_issuance (employee_name, position, department, issuance_date, asset_type, device_model, service_tag, serial_number, mouse, connector) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    
-    // Check if prepare() succeeded
+    // Check if serial number already exists
+    $sql = "SELECT employee_name FROM asset_issuance WHERE serial_number = ?";
+    $stmt = $conn->prepare($sql);
     if (!$stmt) {
         die("Prepare failed: " . $conn->error);
     }
-
-    // Bind parameters to the prepared statement
-    $stmt->bind_param("ssssssssss", $employee_name, $position, $department, $issuance_date, $asset_type, $device_model, $service_tag, $serial_number, $mouse, $connector);
-
-    // Execute SQL statement
-    if ($stmt->execute() === TRUE) {
-        echo "Asset issuance record created successfully";
-    } else {
-        echo "Error: " . $stmt->error;
-    }
-
-    // Close statement and connection
+    $stmt->bind_param("s", $serial_number);
+    $stmt->execute();
+    $stmt->bind_result($existing_employee_name);
+    $stmt->fetch();
     $stmt->close();
+
+    if ($existing_employee_name) {
+        echo "Error: This device is already assigned to $existing_employee_name.";
+    } else {
+        // Prepare SQL statement for insertion
+        $stmt = $conn->prepare("INSERT INTO asset_issuance (employee_name, position, department, issuance_date, asset_type, device_model, service_tag, serial_number, mouse, connector) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        
+        // Check if prepare() succeeded
+        if (!$stmt) {
+            die("Prepare failed: " . $conn->error);
+        }
+
+        // Bind parameters to the prepared statement
+        $stmt->bind_param("ssssssssss", $employee_name, $position, $department, $issuance_date, $asset_type, $device_model, $service_tag, $serial_number, $mouse, $connector);
+
+        // Execute SQL statement
+        if ($stmt->execute() === TRUE) {
+            echo "Asset issuance record created successfully";
+            echo '<form action="view_assigned.php" method="get">';
+            echo '<button type="submit">View Assigned</button>';
+            echo '</form>';
+            exit();
+        } else {
+            echo "Error: " . $stmt->error;
+        }
+
+        // Close statement and connection
+        $stmt->close();
+    }
+    
     $conn->close();
 } else {
     echo "Error: Form not submitted";

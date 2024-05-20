@@ -1,3 +1,5 @@
+<?php include 'header.php'; ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,16 +27,6 @@
     </style>
 </head>
 <body>
-    <div class="menu">
-
-        <form action="index.php" method="get">
-            <button type="submit">Home</button>
-        </form>
-        
-        <form action="assets_stock.php" method="get">
-            <button type="submit">Update Inventory/stock</button>
-        </form>
-    </div>
 
     <h1>View Inventory/Assets Stock</h1>
     <?php

@@ -26,7 +26,7 @@ if(!isset($_SESSION['admin_id'])) {
         </form>
         <!-- To view assigned assets -->
         <form action="view_assigned.php" method="get">
-            <button type="submit">View Assets</button>
+            <button type="submit">View Assigned</button>
         </form>
         <!-- To update Stock -->
         <form action="assets_stock.php" method="get">
