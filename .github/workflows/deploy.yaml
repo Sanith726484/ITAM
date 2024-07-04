@@ -20,18 +20,9 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.LOCAL_SERVER }}
       
-      # - name: Setup SSH
-      #   run: |
-      #     mkdir -p ~/.ssh
-      #     echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
-      #     chmod 600 ~/.ssh/id_rsa
-      #     ssh-keyscan -H 100.112.150.5 >> ~/.ssh/known_hosts
-      #   env:
-      #     SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-
       - name: Set env vars
         run: echo "SSH_TARGET=100.112.150.5" >> $GITHUB_ENV
 
       - name: Rsync files to Linode server
         run: |
-          rsync -azhv --no-t -e "ssh -o StrictHostKeyChecking=no " ./php/ deploy@${{ env.SSH_TARGET }}:/var/www/apps/itam/
+          rsync -azhv --no-t -e "ssh -o StrictHostKeyChecking=no" ./php/ deploy@${{ env.SSH_TARGET }}:/var/www/apps/
