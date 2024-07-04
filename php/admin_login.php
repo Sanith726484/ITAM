@@ -49,7 +49,7 @@ function validateAdmin($username, $password) {
     <title>Admin Login</title>
 </head>
 <body>
-    <h1>Admin Login only</h1>
+    <h1>Admin Login</h1>
     
     <form action="" method="post">
         <label for="username">Username:</label>
