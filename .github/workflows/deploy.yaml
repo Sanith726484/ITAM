@@ -13,9 +13,10 @@ jobs:
       - name: Set up Tailscale
         uses: tailscale/github-action@v2
         with:
-          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
-          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
-          tags: tag:cd
+          authkey: ${{ secrets.TS_AUTH_KEY }}
+          # oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          # oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+          # tags: tag:cd
 
       - name: Set up SSH Agent
         uses: webfactory/ssh-agent@v0.5.3
