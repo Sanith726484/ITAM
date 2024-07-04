@@ -20,9 +20,9 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.LOCAL_SERVER }}
 
-      # - name: Set env vars
-        # run: echo "SSH_TARGET=whdeepsea" >> $GITHUB_ENV
+      - name: Set env vars
+        run: echo "SSH_TARGET=192.168.0.132" >> $GITHUB_ENV
 
       - name: Rsync files to Linode server
         run: |
-          rsync -azhv --no-t -e "ssh -o StrictHostKeyChecking=no " ./php/ deploy@192.168.0.132:/var/www/apps/itam/
+          rsync -azhv --no-t -e "ssh -o StrictHostKeyChecking=no " ./php/ deploy@${{ env.SSH_TARGET }}:/var/www/apps/itam/
