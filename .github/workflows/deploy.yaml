@@ -4,7 +4,7 @@ on:
     branches:
       - main
 
-jobs: 
+jobs:
   build-and-deploy:
     runs-on: ubuntu-20.04
     steps:
@@ -13,25 +13,18 @@ jobs:
       - name: Set up Tailscale
         uses: tailscale/github-action@v2
         with:
-          authkey: ${{ secrets.LOCAL_TAILSCALE_AUTHKEY }}
+          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+          tags: tag:cd
 
       - name: Set up SSH Agent
         uses: webfactory/ssh-agent@v0.5.3
         with:
           ssh-private-key: ${{ secrets.LOCAL_SERVER }}
-      
-      # - name: Setup SSH
-      #   run: |
-      #     mkdir -p ~/.ssh
-      #     echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
-      #     chmod 600 ~/.ssh/id_rsa
-      #     ssh-keyscan -H 100.112.150.5 >> ~/.ssh/known_hosts
-      #   env:
-      #     SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Set env vars
         run: echo "SSH_TARGET=100.112.150.5" >> $GITHUB_ENV
 
       - name: Rsync files to Linode server
         run: |
-          rsync -azhv --no-t -e "ssh -o StrictHostKeyChecking=no " ./php/ deploy@${{ env.SSH_TARGET }}:/var/www/apps/itam/
+          rsync -azhv --no-t -e "ssh -o StrictHostKeyChecking=no" ./php/ deploy@${{ env.SSH_TARGET }}:/var/www/apps/itam/php/
