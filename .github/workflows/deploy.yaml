@@ -25,4 +25,4 @@ jobs:
 
       - name: Rsync files to Linode server
         run: |
-          rsync -azhv --no-t -e "ssh -o StrictHostKeyChecking=no " ./php/ navtech@192.168.0.132:/var/www/apps/itam/
+          rsync -azhv --no-t -e "ssh -o StrictHostKeyChecking=no " ./php/ deploy@192.168.0.132:/var/www/apps/itam/
