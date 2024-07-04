@@ -46,7 +46,7 @@ function validateAdmin($username, $password) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login</title>
+    <title>Admin Login only</title>
 </head>
 <body>
     <h1>Admin Login</h1>

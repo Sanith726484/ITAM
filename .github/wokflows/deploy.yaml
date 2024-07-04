@@ -1,0 +1,28 @@
+name: Deploy to local server
+on:
+  push:
+    branches:
+      - main
+
+jobs: 
+  build-and-deploy:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Tailscale
+        uses: tailscale/github-action@v2
+        with:
+          authkey: ${{ secrets.LOCAL_TAILSCALE_AUTHKEY }}
+
+      - name: Set up SSH Agent
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.LOCAL_SERVER }}
+
+      - name: Set env vars
+        # run: echo "SSH_TARGET=whdeepsea" >> $GITHUB_ENV
+
+      - name: Rsync files to Linode server
+        run: |
+          rsync -azhv --no-t -e "ssh -o StrictHostKeyChecking=no " ./php/ navtech@192.168.0.132:/var/www/apps/itam/
